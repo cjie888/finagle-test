@@ -25,11 +25,16 @@
   </parent>
 
   <groupId>org.apache.spark</groupId>
-  <artifactId>spark-core_2.10</artifactId>
+  <artifactId>spark-test</artifactId>
   <packaging>jar</packaging>
   <name>Spark Project Core</name>
   <url>http://spark.apache.org/</url>
   <dependencies>
+      <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-streaming_2.10</artifactId>
+          <version>0.9.1</version>
+      </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-client</artifactId>
