@@ -1,6 +1,7 @@
 package cn.chinahoop.ml
 
 import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._
 import org.apache.spark.mllib.recommendation.{ALS, Rating}
 
 /**
@@ -14,7 +15,7 @@ object CollaborativeFiltering {
 
     //通过数据构造Rating，本质上就是一个Tuple3[Int,Int,Double]
     val ratings = data.map(_.split(',') match {
-      case Array(user,item,rate) => Rating(user.toInt,item.toInt,rate.toDouble)
+      case Array(user,item,rate) => Rating(user.toInt, item.toInt, rate.toDouble)
     })
 
     //利用ALS构建推荐模型
@@ -22,14 +23,13 @@ object CollaborativeFiltering {
     val model = ALS.train(ratings, 1, 20, 0.01)
 
     //预测
-    val usersProducts = ratings.map {
-      case Rating(user, product, rate) => (user,product)
-    }
-    val predictions = model.predict(usersProducts).map {
-      case Rating(user,product,rate) =>((user,product), rate)
+    // Evaluate the model on rating data
+    val usersProducts = ratings.map{ case Rating(user, product, rate)  => (user, product)}
+    val predictions = model.predict(usersProducts).map{
+      case Rating(user, product, rate) => ((user, product), rate)
     }
     val ratesAndPreds = ratings.map{
-      case Rating(user,product, rate) => ((user,product), rate)
+      case Rating(user, product, rate) => ((user, product), rate)
     }.join(predictions)
 
     //打印出原始打分及预测打分
