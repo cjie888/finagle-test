@@ -6,7 +6,7 @@ import java.util.HashSet
 import org.apache.spark.util.Vector
 
 /**
- * Created by Administrator on 14-8-2.
+ * Created by hucj on 14-8-2.
  */
 object KMeans {
 
