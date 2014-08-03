@@ -65,7 +65,7 @@ object KMeans {
 
       //把具有相同质心的向量标量相加
       val pointStats = mappings.map(pair => pair._2.reduceLeft[(Int, (Vector, Int))] {
-        case ((id1,(x1,y1)), (id2,(x2,y2))) => (id1, (x1,y2))
+        case ((id1,(x1,y1)), (id2,(x2,y2))) => (id1, (x1+x2,y1+y2))
       })
 
       //找出十个新的质心
