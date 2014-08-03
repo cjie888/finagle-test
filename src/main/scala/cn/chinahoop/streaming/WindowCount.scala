@@ -16,7 +16,7 @@ object WindowCount {
       System.exit(1)
     }
     val ssc = new StreamingContext(args(0),"WindowCounter",Seconds(args(3).toInt),
-      System.getenv("SPARK_HOME"), StreamingContext.jarOfClass(this.getClass))
+      System.getenv("SPARK_HOME"), StreamingContext.jarOfClass(this.getClass).toSeq)
     ssc.checkpoint(".")
     val lines = ssc.socketTextStream(args(1),args(2).toInt,StorageLevel.MEMORY_ONLY_SER)
     val words = lines.flatMap(_.split(" "))

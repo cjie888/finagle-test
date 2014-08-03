@@ -16,7 +16,8 @@ object NetworkWordCount {
        System.exit(1)
      }
      val ssc = new StreamingContext(args(0),"NetWorkCount",Seconds(args(3).toInt),
-       System.getenv("SPARK_HOME"), StreamingContext.jarOfClass(this.getClass))
+       //System.getenv("SPARK_HOME"), StreamingContext.jarOfClass(this.getClass)) //spark 0.9
+       System.getenv("SPARK_HOME"), StreamingContext.jarOfClass(this.getClass).toSeq) //spark 1.0 change
      val lines = ssc.socketTextStream(args(1),args(2).toInt,StorageLevel.MEMORY_ONLY_SER)
      val words = lines.flatMap(_.split(" "))
      // val wordCounts = words.map(x => (x,1)).reduceByKey(_+_)

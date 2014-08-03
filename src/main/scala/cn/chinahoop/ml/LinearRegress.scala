@@ -2,6 +2,7 @@ package cn.chinahoop.ml
 
 import org.apache.spark.SparkContext
 import org.apache.spark.mllib.regression.{LinearRegressionWithSGD, LabeledPoint}
+import org.apache.spark.mllib.linalg.Vectors
 
 /**
  * Created by Administrator on 14-8-2.
@@ -13,7 +14,8 @@ object LinearRegress {
 
     val parsedData = data.map { line=>
       val parts = line.split(',')
-      LabeledPoint(parts(0).toDouble,parts(1).split(' ').map(x=> x.toDouble).toArray)
+      //LabeledPoint(parts(0).toDouble,parts(1).split(' ').map(x=> x.toDouble).toArray) //spark 0.9
+      LabeledPoint(parts(0).toDouble, Vectors.dense(parts(1).split(' ').map(x => x.toDouble))) //spark 1.0 change
     }
     //构建模型
     val numIterations = 20
