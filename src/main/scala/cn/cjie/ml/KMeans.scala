@@ -1,4 +1,4 @@
-package cn.chinahoop.ml
+package cn.cjie.ml
 
 import scala.util.Random
 import scala.collection.mutable.HashMap

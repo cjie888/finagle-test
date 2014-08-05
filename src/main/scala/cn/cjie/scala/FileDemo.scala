@@ -1,4 +1,4 @@
-package cn.chinahoop.scala
+package cn.cjie.scala
 
 import scala.io.Source
 

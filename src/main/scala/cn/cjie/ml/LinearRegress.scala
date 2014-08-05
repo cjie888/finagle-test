@@ -1,4 +1,4 @@
-package cn.chinahoop.ml
+package cn.cjie.ml
 
 import org.apache.spark.SparkContext
 import org.apache.spark.mllib.regression.{LinearRegressionWithSGD, LabeledPoint}

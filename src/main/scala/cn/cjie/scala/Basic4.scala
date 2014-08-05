@@ -1,4 +1,4 @@
-package cn.chinahoop.scala
+package cn.cjie.scala
 
 /**
  * Created with IntelliJ IDEA.

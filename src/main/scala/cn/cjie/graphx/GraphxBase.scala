@@ -1,4 +1,4 @@
-package cn.chinahoop.graphx
+package cn.cjie.graphx
 
 /**
  * Created with IntelliJ IDEA.
