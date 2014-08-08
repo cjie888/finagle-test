@@ -11,7 +11,6 @@ package cn.cjie.graphx
 
 import org.apache.spark._
 import org.apache.spark.graphx._
-import org.apache.spark.streaming.StreamingContext
 
 // To make some of the examples work we will also need RDD
 import org.apache.spark.rdd.RDD
