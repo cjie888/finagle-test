@@ -2,6 +2,7 @@ package cn.cjie.graphx
 
 import org.apache.spark.SparkContext
 import org.apache.spark.graphx.{VertexId, GraphLoader}
+import org.apache.spark.SparkContext._
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +12,7 @@ import org.apache.spark.graphx.{VertexId, GraphLoader}
  * To change this template use File | Settings | File Templates.
  */
 object GraphxPregel extends App {
-  val sc: SparkContext = new SparkContext("local[2]","graphloader")
+  val sc: SparkContext = new SparkContext("local[2]","graphpregel")
   val graph = GraphLoader.edgeListFile(sc, "data/graphx/web-google.txt")
 
   val sourceId:VertexId = 0
@@ -21,7 +22,7 @@ object GraphxPregel extends App {
        (id, dist, newDist) => math.min(dist,newDist),
        triplet=>{
         if (triplet.srcAttr + triplet.attr < triplet.dstAttr) {
-          Iterator(triplet.dstId, triplet.srcAttr + triplet.attr)
+          Iterator((triplet.dstId, triplet.srcAttr + triplet.attr))
         }
         else {
           Iterator.empty
@@ -29,5 +30,15 @@ object GraphxPregel extends App {
       },
       (a,b) =>math.min(a,b)
   )
+
+  val ranks = graph.pageRank(0.01).vertices.map{
+    case (id, prc) => (prc, id)
+  }.sortByKey().map(x=>(x._2,x._1)).collect()
+
+  val counts = graph.triangleCount().vertices.map{
+    case (id, tc) => (tc, id)
+  }.sortByKey().map(x=>(x._2,x._1)).collect()
+
+
 }
 
