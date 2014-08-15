@@ -20,7 +20,7 @@ object CollaborativeFiltering {
 
     //利用ALS构建推荐模型
     val numIterations = 20
-    val model = ALS.train(ratings, 1, 20, 0.01)
+    val model = ALS.train(ratings, 5, 20, 0.01)
 
     //预测
     // Evaluate the model on rating data
