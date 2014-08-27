@@ -1,5 +1,7 @@
 package cn.cjie.sql
 
+import org.apache.hadoop.hive.ql.exec.UDF
+
 /**
  * Created with IntelliJ IDEA.
  * User: Administrator

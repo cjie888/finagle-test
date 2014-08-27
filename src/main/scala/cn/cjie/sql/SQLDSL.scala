@@ -21,5 +21,5 @@ object SQLDSL extends  App {
     .map(w=>Word(w(0).toInt,w(1).toInt,w(2).toInt))
   word.registerAsTable("word")
 
-  val rs = word.where("times > 50").where("aid>2").select("wid").distinct("wid").limit(10)
+  val rs = word.where('times > 50).where('aid > 2).select('wid).distinct().limit(10)
 }
