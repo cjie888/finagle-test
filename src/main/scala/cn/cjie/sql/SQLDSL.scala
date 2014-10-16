@@ -22,4 +22,5 @@ object SQLDSL extends  App {
   word.registerAsTable("word")
 
   val rs = word.where('times > 50).where('aid > 2).select('wid).distinct().limit(10)
+  rs.collect().foreach(println)
 }
