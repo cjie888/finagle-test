@@ -15,7 +15,7 @@ object SQLParquet extends App{
 
   import sqlContext._
 
-  val data = sc.textFile("data/test/people")
+  val data = sc.textFile("data/sql/people")
 
   case class People(name:String, age:Int)
 
@@ -27,6 +27,6 @@ object SQLParquet extends App{
 
   parquetFile.registerAsTable("parquetFile")
 
-  val rs = sql("select name from parquetFile where age")
+  val rs = sql("select name from parquetFile where age>20")
   rs.map(r=>"name:"+r(0)).collect().foreach(println)
 }
