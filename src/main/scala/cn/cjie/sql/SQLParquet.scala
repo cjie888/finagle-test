@@ -21,9 +21,9 @@ object SQLParquet extends App{
 
   val people = data.map(_.split(',')).map(p=>People(p(0),p(1).toInt))
 
-  people.saveAsParquetFile("data/test/people/parquet")
+  people.saveAsParquetFile("data/test/people.parquet")
 
-  val parquetFile = sqlContext.parquetFile("data/test/people/parquet")
+  val parquetFile = sqlContext.parquetFile("data/test/people.parquet")
 
   parquetFile.registerAsTable("parquetFile")
 
