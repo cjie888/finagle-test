@@ -17,7 +17,7 @@ object SQLDSL extends  App {
 
   case class Word(wid:Int, aid:Int, times:Int)
 
-  val word = sc.textFile("sql/docword.nytimes.txt").map(_.split(' ')).filter(_.length==3)
+  val word = sc.textFile("data/sql/docword.nytimes.txt").map(_.split(' ')).filter(_.length==3)
     .map(w=>Word(w(0).toInt,w(1).toInt,w(2).toInt))
   word.registerAsTable("word")
 
