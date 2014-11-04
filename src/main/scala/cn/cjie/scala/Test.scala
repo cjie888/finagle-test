@@ -14,10 +14,17 @@ import org.apache.spark.SparkContext
 
 object Test extends  App {
   println("Hello")
-  val list:Collection[String] = new java.util.ArrayList[String]()
-  list.add("test")
-  list.add("test2")
+  val list:Collection[Float] = new java.util.ArrayList[Float]()
+  list.add(0.000973141302f)
+  list.add(0.00093202f)
   val set = list.toSeq
+
   val sc = new SparkContext("local[2]","test")
-  sc.parallelize(set).collect().foreach(println)
+  sc.parallelize(set).map(x=>("%.8f" format x)).coalesce(1).saveAsTextFile("/test.txt")
+
+  val sf = 0.000973141302f
+  println(sf)
+  printf("%.8f\n",sf)
+  println("%.8f" format sf)
+
 }
