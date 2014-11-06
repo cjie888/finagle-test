@@ -1,10 +1,13 @@
 package cn.cjie.scala.akka.typedactor
 
+import java.util.concurrent.TimeUnit
+
 import akka.actor.{OneForOneStrategy, SupervisorStrategy, ActorRef, TypedActor}
+import akka.util.Timeout
 import scala.concurrent.{Promise, Future}
 import akka.actor.TypedActor.{PreStart, PostStop}
 import akka.event.Logging
-import akka.actor.SupervisorStrategy.Resume
+import akka.actor.SupervisorStrategy.{Escalate, Stop, Restart, Resume}
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,9 +19,9 @@ import akka.actor.SupervisorStrategy.Resume
 class Calculator extends CalculatorInt with PreStart with PostStop {
   var counter: Int = 0
   import TypedActor.dispatcher
-  def add(first: Int, second: Int): Future[Int] =
-    Promise successful first + second
-  def subtract(first: Int, second: Int): Future[Int] =
+  def add(first: Int, second: Int): Promise[Int] =
+    Promise.successful(first + second)
+  def subtract(first: Int, second: Int): Promise[Int] =
     Promise successful first - second
   def incrementCount(): Unit = counter += 1
   def incrementAndReturn(): Option[Int] = {
@@ -41,7 +44,7 @@ class Calculator extends CalculatorInt with PreStart with PostStop {
 
   def supervisorStrategy(): SupervisorStrategy =
     OneForOneStrategy(maxNrOfRetries = 10,
-      withinTimeRange = 10 seconds) {
+      withinTimeRange = Timeout(10, TimeUnit.SECONDS).duration) {
       case _: ArithmeticException => Resume
       case _: IllegalArgumentException => Restart
       case _: NullPointerException => Stop

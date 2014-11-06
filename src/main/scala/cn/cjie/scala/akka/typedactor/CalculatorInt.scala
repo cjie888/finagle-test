@@ -1,6 +1,6 @@
 package cn.cjie.scala.akka.typedactor
 
-import scala.concurrent.Future
+import scala.concurrent.{Promise, Future}
 
 
 /**
@@ -11,8 +11,8 @@ import scala.concurrent.Future
  * To change this template use File | Settings | File Templates.
  */
 trait CalculatorInt {
-  def add(first: Int, second: Int): Future[Int]
-  def subtract(first: Int, second: Int): Future[Int]
+  def add(first: Int, second: Int): Promise[Int]
+  def subtract(first: Int, second: Int): Promise[Int]
   def incrementCount(): Unit
   def incrementAndReturn(): Option[Int]
 }
