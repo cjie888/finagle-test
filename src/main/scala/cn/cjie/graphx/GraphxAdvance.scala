@@ -34,10 +34,14 @@ object GraphxAdvance extends App{
     // Add counter and age
     (a, b) => (a._1 + b._1, a._2 + b._2) // Reduce Function
   )
+  olderFollowers.foreach(println)
   // Divide total age by number of older followers to get average age of older followers
   val avgAgeOfOlderFollowers: VertexRDD[Double] =
     olderFollowers.mapValues( (id, value) => value match {
       case (count, totalAge) => totalAge / count } )
   // Display the results
   avgAgeOfOlderFollowers.collect.foreach(println(_))
+
+  val neighbors = graph.collectNeighbors(EdgeDirection.Out)
+
 }
