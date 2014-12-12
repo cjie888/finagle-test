@@ -20,9 +20,14 @@ object WindowCount {
     ssc.checkpoint(".")
     val lines = ssc.socketTextStream(args(1),args(2).toInt,StorageLevel.MEMORY_ONLY_SER)
     val words = lines.flatMap(_.split(" "))
-    //val wordCounts = words.map(x=>(x,1)).reduceByWindow((x:Int,y:Int)=>x+y,Seconds(args(4)),Seconds(args(5)))
-    val wordCounts = words.map(x=>(x,1)).reduceByKeyAndWindow(_+_,_-_,Seconds(args(4).toInt),Seconds(args(5).toInt)).reduce((a, b) => if (a._2 > b._2) a else b)
+    val wordCounts = words.map(x=>(x,1)).reduceByKeyAndWindow((x:Int,y:Int)=>x+y,Seconds(args(4).toInt),Seconds(args(5).toInt))
+    //val wordCounts = words.map(x=>(x,1)).reduceByKeyAndWindow(_+_,_-_,Seconds(args(4).toInt),Seconds(args(5).toInt)).reduce((a, b) => if (a._2 > b._2) a else b)
 
+    //var wordcounts = words.map(x=>(x,1)).reduceByKeyAndWindow(_+_,Seconds(30))
+    //var wordcounts = words.map(x=>(x,1)).reduceByKeyAndWindow((x:Int,y:Int)=>x+y,_-_,Seconds(5),Seconds(6))
+    //var wordcounts = words.map(x=>(x,1)).countByValueAndWindow(Seconds(12),Seconds(30))
+
+   // val sortedWordCont = wordCounts.map{case(char,count) => (count,char)}.transform{_.sortByKey(false)}
     wordCounts.print()
     ssc.start
     ssc.awaitTermination()
