@@ -16,7 +16,7 @@ public class PingPongApplication {
     public static void main(String[] args) throws InterruptedException {
         ActorSystem _system = ActorSystem.create("BecomeUnbecome");
         ActorRef pingPongActor = _system
-                .actorOf(new Props(cn.cjie.scala.akka.actor.PingPongActor.class));
+                .actorOf(new Props(com.cjie.akka.actor.PingPongActor.class));
         pingPongActor.tell(PingPongActor.PING, pingPongActor);
         Thread.sleep(2000);
         _system.shutdown();
