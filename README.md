@@ -1,4 +1,2 @@
-spark-test
-==========
-
-spark and scala test
+# finagle-test
+finagle test
