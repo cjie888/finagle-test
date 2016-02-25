@@ -45,7 +45,7 @@ public class BurstyMessageRouter extends CustomRouterConfig {
         return new CustomRoute() {
             int messageCount = 0;
             int actorSeq = 0;
-            public Iterable<Destination> destinationsFor(ActorRef sender, Object message) {
+            public Seq<Destination> destinationsFor(ActorRef sender, Object message) {
                 ActorRef actor = routees.get(actorSeq);
                 List<Destination> destinationList = Arrays
                         .asList(new Destination[]
@@ -63,7 +63,7 @@ public class BurstyMessageRouter extends CustomRouterConfig {
                         actorSeq = 0;
                     }
                 }
-                return (Iterable<Destination>) destinationList;
+                return (Seq<Destination>) destinationList;
             }
         };
     }
