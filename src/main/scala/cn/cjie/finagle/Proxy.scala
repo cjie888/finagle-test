@@ -9,7 +9,7 @@ import com.twitter.util.Await
 
 object Proxy extends App {
   val client: Service[Request, Response] =
-    Http.newService("www.google.com:80")
+    Http.newService("www.baidu.com")
 
   val server = Http.serve(":8080", client)
   Await.ready(server)

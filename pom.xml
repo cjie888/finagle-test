@@ -24,6 +24,39 @@
   <packaging>jar</packaging>
   <name>finagle test</name>
   <version>0.1</version>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <java.version>1.6</java.version>
+
+        <scala.version>2.10.4</scala.version>
+        <scala.binary.version>2.10</scala.binary.version>
+        <mesos.version>0.18.1</mesos.version>
+        <mesos.classifier>shaded-protobuf</mesos.classifier>
+        <akka.group>org.spark-project.akka</akka.group>
+        <akka.version>2.2.3-shaded-protobuf</akka.version>
+        <slf4j.version>1.7.5</slf4j.version>
+        <log4j.version>1.2.17</log4j.version>
+        <hadoop.version>1.0.4</hadoop.version>
+        <protobuf.version>2.4.1</protobuf.version>
+        <yarn.version>${hadoop.version}</yarn.version>
+        <hbase.version>0.94.6</hbase.version>
+        <zookeeper.version>3.4.5</zookeeper.version>
+        <hive.version>0.12.0</hive.version>
+        <parquet.version>1.4.3</parquet.version>
+        <jblas.version>1.2.3</jblas.version>
+        <jetty.version>8.1.14.v20131031</jetty.version>
+        <chill.version>0.3.6</chill.version>
+        <codahale.metrics.version>3.0.0</codahale.metrics.version>
+        <avro.version>1.7.6</avro.version>
+        <jets3t.version>0.7.1</jets3t.version>
+
+        <PermGen>64m</PermGen>
+        <MaxPermGen>512m</MaxPermGen>
+    </properties>
   <repositories>
     <repository>
         <id>typesafe</id>
@@ -71,41 +104,26 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.scalatest</groupId>
-        <artifactId>scalatest-maven-plugin</artifactId>
-        <configuration>
-          <environmentVariables>
-            <SPARK_HOME>${basedir}/..</SPARK_HOME>
-            <SPARK_TESTING>1</SPARK_TESTING>
-            <SPARK_CLASSPATH>${spark.classpath}</SPARK_CLASSPATH>
-          </environmentVariables>
-        </configuration>
-      </plugin>
-      <!-- Unzip py4j so we can include its files in the jar -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.2.1</version>
-        <executions>
-          <execution>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <executable>unzip</executable>
-          <workingDirectory>../python</workingDirectory>
-          <arguments>
-            <argument>-o</argument>
-            <argument>lib/py4j*.zip</argument>
-            <argument>-d</argument>
-            <argument>build</argument>
-          </arguments>
-        </configuration>
-      </plugin>
+        <plugin>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest-maven-plugin</artifactId>
+            <version>1.0-RC2</version>
+            <configuration>
+                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                <junitxml>.</junitxml>
+                <filereports>${project.build.directory}/SparkTestSuite.txt</filereports>
+                <argLine>-Xmx3g -XX:MaxPermSize=${MaxPermGen} -XX:ReservedCodeCacheSize=512m</argLine>
+                <stderr />
+            </configuration>
+            <executions>
+                <execution>
+                    <id>test</id>
+                    <goals>
+                        <goal>test</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
         <plugin>
             <artifactId>maven-assembly-plugin</artifactId>
             <version>2.3</version>
